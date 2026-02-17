@@ -1,0 +1,41 @@
+services:
+  mysql:
+    image: mysql:8.0.42
+    ports:
+      - 23308:3306
+    volumes:
+      - ./storage/db/data:/var/lib/mysql
+    #  - ./storage/db/sql/dump.sql.gz:/docker-entrypoint-initdb.d/dump.sql.gz
+    env_file:
+      - .env
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+
+#  scheduler:
+#    build: ./docker
+#    env_file:
+#      - .env
+#    command: /usr/local/bin/cron-entrypoint.sh
+#    restart: always
+#    volumes:
+#      - ./app:/var/www/html
+
+#  worker:
+#    build: ./docker
+#    env_file:
+#      - .env
+#    command: /usr/local/bin/worker-entrypoint.sh
+#    restart: always
+#    volumes:
+#      - ./app:/var/www/html
+
+  app:
+    build: ./docker
+    env_file:
+      - .env
+    volumes:
+      - ./app:/var/www/html
+    ports:
+      - 8000:80
+

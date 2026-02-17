@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+echo -e "${BLUE}[INFO]${NC} Making database dir"
+if [ ! -d "storage" ]; then
+  mkdir -p storage/db/data storage/db/sql
+fi
+
+echo -e "${BLUE}[INFO]${NC} Installing composer dependencies"
+( cd ./app && docker run --rm --interactive --tty --volume $PWD:/app composer install --ignore-platform-reqs )
+
+echo -e "${BLUE}[INFO]${NC} Building images"
+docker-compose build
