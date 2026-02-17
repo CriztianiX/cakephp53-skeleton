@@ -15,7 +15,7 @@ declare(strict_types=1);
  */
 namespace App\View;
 
-use Cake\View\View;
+use Cake\TwigView\View\TwigView;
 
 /**
  * Application View
@@ -25,7 +25,7 @@ use Cake\View\View;
  * @link https://book.cakephp.org/5/en/views.html#the-app-view
  * @extends \Cake\View\View<\App\View\AppView>
  */
-class AppView extends View
+class AppView extends TwigView
 {
     /**
      * Initialization hook method.
@@ -38,5 +38,16 @@ class AppView extends View
      */
     public function initialize(): void
     {
+        parent::initialize();
+    }
+
+    /**
+     * Initialize extensions for TwigView.
+     *
+     * @return void
+     */
+    protected function initializeExtensions(): void
+    {
+        parent::initializeExtensions();
     }
 }
